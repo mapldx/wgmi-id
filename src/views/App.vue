@@ -84,14 +84,14 @@
   </div>
   <div class="flex flex-wrap overflow-hidden">
 
-  <div class="w-1/2 overflow-hidden sm:w-1/2 lg:w-1/2 xl:w-1/2">
-    <!-- Column Content -->{{ user.username }}
-  </div>
-  <div class="w-1/2 overflow-hidden sm:w-1/2 lg:w-1/2 xl:w-1/2">
-    <!-- Column Content -->
-  </div>
+    <div class="w-1/2 overflow-hidden sm:w-1/2 lg:w-1/2 xl:w-1/2">
+      <!-- Column Content -->User Object: {{ user }}
+    </div>
+    <div class="w-1/2 overflow-hidden sm:w-1/2 lg:w-1/2 xl:w-1/2">
+      <!-- Column Content -->ETH: {{ ethAddress }}<br>SOL: {{ solAddress }}
+    </div>
 
-</div>
+  </div>
   <Footer />
 </div>
 </template>
@@ -101,7 +101,7 @@
 import Footer from '../components/Footer.vue'
 import {
   inject,
-  onMounted,
+  onBeforeMount,
   computed
 } from 'vue'
 import {
@@ -119,10 +119,21 @@ export default {
     const $moralis = inject('$moralis')
     const setUser = (payload) => store.commit('setUser', payload)
 
-    onMounted(() => {
-      let modalBackground = document.querySelector("div[class*='bg-gray-900 bg-opacity-50']")
-      if (modalBackground) modalBackground.remove()
+    const user = JSON.parse(localStorage.getItem('vuex'))
+    const username = user.user.username
+    const ethAddress = user.user.ethAddress
+    const solAddress = user.user.solAddress
+
+    onBeforeMount(() => {
+      try {
+        let modalBackground = document.querySelector("div[class*='bg-gray-900 bg-opacity-50']")
+        if (modalBackground) modalBackground.remove()
+        console.log(user)
+      } catch (error) {
+        console.log(error)
+      }
     })
+
     const logout = async () => {
       await $moralis.User.logOut()
       setUser({})
@@ -132,8 +143,11 @@ export default {
     }
     return {
       logout,
-      isAuthenticated: computed(() => Object.keys(store.state.user).length > 0),
-      user: computed(() => store.state.user)
+      user,
+      username,
+      ethAddress,
+      solAddress,
+      isAuthenticated: computed(() => Object.keys(store.state.user).length > 0)
     }
   }
 }

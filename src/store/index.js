@@ -28,6 +28,9 @@ const store = createStore({
     },
     getEth: state => {
       return state.user.ethAddress
+    },
+    getUsername: state => {
+      return state.user.username
     }
   }
 })
