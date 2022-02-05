@@ -9,7 +9,7 @@
       </div>
       <ul v-if="isAuthenticated" class="flex items-center hidden space-x-8 lg:flex">
         <li>
-          <button v-on:click="logout" aria-label="Log out" title="Log out" class="transition-colors duration-200 hover:text-logo-20">Log out</button>
+          <button v-on:click="logout" aria-label="Go to app" title="Go to app" class="transition-colors duration-200 hover:text-logo-20">Go to app</button>
         </li>
       </ul>
       <ul v-else class="flex items-center hidden space-x-8 lg:flex">
@@ -101,7 +101,7 @@
           <span class="inline-block text-deep-purple-accent-400">One address to show it all.</span>
         </h2>
         <p class="text-base text-gray-700 md:text-lg">
-          The future is multi-chain and so are your Punks, Apes, metaverse land titles, POAPs, DeFi tokens, and so much more. Your <b>wgmi.ID</b> is your universal Web 2 and 3 identity.
+          The future is multi-chain and so are your Punks, Apes, metaverse land titles, POAPs, DeFi tokens, and so much more. Your <b class="rounded-lg p-1 bg-gradient-to-r from-logo-10 to-logo-20 text-white">wgmi.ID</b> is your universal Web 2 and 3 identity.
         </p>
       </div>
       <div class="px-5 pt-6 pb-5 text-center border border-logo-20 rounded lg:w-full">
@@ -134,7 +134,7 @@
     </div>
   </div>
   <div class="flex justify-center h-3/4 overflow-hidden lg:w-2/3 xl:w-1/2 lg:absolute lg:justify-start lg:top-0 lg:right-0 lg:items-center lg:mt-20">
-    <img src="https://kitwind.io/assets/kometa/full-browser.png" class="object-cover object-top w-full h-64 max-w-xl -mb-16 rounded shadow-2xl lg:ml-64 xl:ml-8 lg:-mb-24 xl:-mb-28 lg:h-auto lg:max-w-screen-md" alt="" />
+    <img src="https://kitwind.io/assets/kometa/full-browser.png" class="object-cover object-top w-full h-64 max-w-xl -mb-16 rounded shadow-3xl lg:ml-64 xl:ml-8 lg:-mb-24 xl:-mb-28 lg:h-auto lg:max-w-screen-md" alt="" />
   </div>
 </div>
 
@@ -253,7 +253,6 @@
   </div>
 </div>
 
-<EmailModal />
 </template>
 
 <script>
@@ -267,7 +266,6 @@ import {
   useStore
 } from 'vuex'
 import router from '@/router'
-import EmailModal from './EmailModal'
 
 export default {
   name: 'Header',
@@ -275,7 +273,6 @@ export default {
     "./node_modules/flowbite/**/*.js"
   ],
   components: {
-    EmailModal
   },
   data() {
     return {

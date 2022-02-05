@@ -300,7 +300,8 @@ module.exports = {
 				},
 				logo: {
 					10: '#8F5BFE',
-					20: '#D3803E'
+					20: '#D3803E',
+					30: '#EEEBD0'
 				},
 			},
 			spacing: {
@@ -318,6 +319,7 @@ module.exports = {
 			},
 			boxShadow: {
 				outline: '0 0 0 3px rgba(101, 31, 255, 0.4)',
+				'3xl': '0 35px 60px -15px rgba(0, 0, 0, 0.8)'
 			},
 		},
 	},
