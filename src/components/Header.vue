@@ -274,11 +274,6 @@ export default {
   ],
   components: {
   },
-  data() {
-    return {
-      auth: 0
-    };
-  },
   setup() {
     const store = useStore()
     const $moralis = inject('$moralis')
@@ -286,19 +281,23 @@ export default {
 
     const authMeta = async () => {
       $moralis.authenticate().then(function(user) {
-        console.log(user.get('ethAddress'))
+        var username = user.get('username');
         setUser(user)
+        router.push({
+          name: 'App',
+          params: { username: username }
+        })
       })
     }
     const authPhantom = async () => {
       $moralis.authenticate({
         type: 'sol'
       }).then(function(user) {
-        var userid = user.get('username');
+        var username = user.get('username');
         setUser(user)
         router.push({
-          name: 'Id',
-          params: { userid: userid }
+          name: 'App',
+          params: { username: username }
         })
       })
     }
@@ -306,8 +305,12 @@ export default {
       $moralis.authenticate({
         provider: "walletconnect"
       }).then(function(user) {
-        console.log(user.get('ethAddress'))
+        var username = user.get('username');
         setUser(user)
+        router.push({
+          name: 'App',
+          params: { username: username }
+        })
       })
     }
     const logout = async () => {

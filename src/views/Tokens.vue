@@ -59,7 +59,7 @@
   <header class="bg-white shadow">
     <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
       <h1 class="text-3xl font-bold text-gray-900 mb-2">Welcome, {{ user.username }}
-        <button v-if="user.username.length <= 1" type="button" v-on:click="chgUname"
+        <button v-if="user.username.length <= 1" type="button"
           class="align-middle ml-1 py-2 px-3 text-xs font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Set your
           username</button>
         <div class="float-right align-top"><span class="bg-blue-100 text-blue-800 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded dark:bg-blue-200 dark:text-blue-800">{{ encodedid }}</span></div>
@@ -69,60 +69,75 @@
   <main>
     <div class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
       <!-- Replace with your content -->
-      <div class="px-4 py-16 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8 lg:py-8">
-        <div class="relative grid gap-8 row-gap-5 md:row-gap-8 lg:grid-cols-4 sm:grid-cols-2">
-          <div class="absolute inset-0 flex items-center justify-center sm:hidden lg:flex">
-            <div class="w-px h-full bg-gray-300 lg:w-full lg:h-px"></div>
-          </div>
-          <div class="p-5 duration-300 transform bg-white border rounded shadow-sm hover:-translate-y-2">
-            <div class="flex items-center justify-between mb-2">
-              <p class="text-lg font-bold leading-5">Page Visits</p>
-              <p class="flex items-center justify-center w-6 h-6 font-bold rounded text-deep-purple-accent-400 bg-indigo-50">
-                1
-              </p>
+      <div class="mb-4 border-b border-gray-200 dark:border-gray-700">
+        <ul class="flex flex-wrap -mb-px" id="myTab" data-tabs-toggle="#myTabContent" role="tablist">
+          <li class="mr-2" role="presentation">
+            <button class="inline-block py-4 px-4 text-sm font-medium text-center text-gray-500 rounded-t-lg border-b-2 border-transparent hover:text-gray-600 hover:border-gray-300 dark:text-gray-400 dark:hover:text-gray-300 active"
+              id="dashboard-tab" data-tabs-target="#dashboard" type="button" role="tab" aria-controls="dashboard" aria-selected="true">Wallet 1</button>
+          </li>
+          <li class="mr-2" role="presentation">
+            <button class="inline-block py-4 px-4 text-sm font-medium text-center text-gray-500 rounded-t-lg border-b-2 border-transparent hover:text-gray-600 hover:border-gray-300 dark:text-gray-400 dark:hover:text-gray-300" id="settings-tab"
+              data-tabs-target="#settings" type="button" role="tab" aria-controls="settings" aria-selected="false">Wallet 2</button>
+          </li>
+          <li role="presentation">
+            <button disabled class="inline-block py-4 px-4 text-sm font-medium text-center text-gray-500 rounded-t-lg border-b-2 border-transparent hover:text-gray-600 hover:border-gray-300 dark:text-gray-400 dark:hover:text-gray-300"
+              id="contacts-tab" data-tabs-target="#contacts" type="button" role="tab" aria-controls="contacts" aria-selected="false">Wallet 3</button>
+          </li>
+        </ul>
+      </div>
+      <div id="myTabContent" class="mb-20">
+        <div class="p-4 bg-gray-50 rounded-lg dark:bg-gray-800" id="dashboard" role="tabpanel" aria-labelledby="dashboard-tab">
+          <p class="text-sm text-gray-500 dark:text-gray-400">Wallet 1: {{ solAddress }}</p>
+        </div>
+        <div class="px-4 py-16 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8 lg:py-20">
+          <div class="flex flex-col w-full mb-6 lg:justify-between lg:flex-row md:mb-8">
+            <div class="flex items-center mb-5 md:mb-6 group lg:max-w-xl">
+              <a href="/" aria-label="Item" class="mr-3">
+                <div class="flex items-center justify-center w-16 h-16 rounded-full bg-indigo-50">
+                  <svg class="w-12 h-12 text-deep-purple-accent-400" stroke="currentColor" viewBox="0 0 52 52">
+                    <polygon stroke-width="3" stroke-linecap="round" stroke-linejoin="round" fill="none" points="29 13 14 29 25 29 23 39 38 23 27 23"></polygon>
+                  </svg>
+                </div>
+              </a>
+              <h3 class="font-sans ml-3 font-semibold leading-none tracking-loose text-gray-900 sm:text-4xl">
+                <span class="inline-block mb-2">Your Solana NFTs</span>
+                <div class="h-1 ml-auto duration-300 origin-left transform bg-deep-purple-accent-400 scale-x-30 group-hover:scale-x-100"></div>
+              </h3>
             </div>
-            <p class="text-sm text-gray-900">
-              Coming soon
-            </p>
           </div>
-          <div class="p-5 duration-300 transform bg-white border rounded shadow-sm hover:-translate-y-2">
-            <div class="flex items-center justify-between mb-2">
-              <p class="text-lg font-bold leading-5">Returning Visitors</p>
-              <p class="flex items-center justify-center w-6 h-6 font-bold rounded text-deep-purple-accent-400 bg-indigo-50">
-                2
+          <div class="grid gap-8 row-gap-5 mb-8 lg:grid-cols-3 lg:row-gap-8">
+            <div>
+              <img class="object-cover w-full h-56 mb-6 rounded shadow-lg md:h-64 xl:h-80" src="https://images.pexels.com/photos/3184291/pexels-photo-3184291.jpeg?auto=compress&amp;cs=tinysrgb&amp;dpr=2&amp;h=750&amp;w=1260" alt="" />
+              <p class="mb-2 text-xl font-bold leading-none sm:text-2xl">
+                Galaxies Orion
               </p>
+              <div class="flex justify-left">
+                <div class="form-check form-switch">
+                  <div class="grid xl:grid-cols-2 xl:gap-6">
+                    <div class="relative z-0 mb-6 w-full group">
+                      <select name="floating_first_name" id="floating_first_name" class="block w-full text-gray-900 bg-white rounded-md border border-gray-300 sm:text-md focus:ring-blue-500 focus:border-blue-500" placeholder="Phantom">
+                        <option value="twitter">Show</option>
+                        <option value="discord">Hide</option>
+                      </select>
+                    </div>
+                    <div class="w-full group">
+                      <button type="submit"
+                        class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Save
+                        </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
-            <p class="text-sm text-gray-900">
-              Coming soon
-            </p>
-          </div>
-          <div class="p-5 duration-300 transform bg-white border rounded shadow-sm hover:-translate-y-2">
-            <div class="flex items-center justify-between mb-2">
-              <p class="text-lg font-bold leading-5">Incoming Payments</p>
-              <p class="flex items-center justify-center w-6 h-6 font-bold rounded text-deep-purple-accent-400 bg-indigo-50">
-                3
-              </p>
-            </div>
-            <p class="text-sm text-gray-900">
-              Coming soon
-            </p>
-          </div>
-          <div class="p-5 duration-300 transform bg-white border rounded shadow-sm hover:-translate-y-2">
-            <div class="flex items-center justify-between mb-2">
-              <p class="text-lg font-bold leading-5">NFT Outlinks</p>
-              <p class="flex items-center justify-center w-6 h-6 font-bold rounded text-deep-purple-accent-400 bg-indigo-50">
-                4
-              </p>
-            </div>
-            <p class="text-sm text-gray-900">
-              Coming soon
-            </p>
           </div>
         </div>
-      </div>
-      <div class="">
-        <div class="relative px-4 py-4 mb-20 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8">
-          <iframe src="/" class="w-full h-screen"></iframe>
+        <div class="hidden p-4 bg-gray-50 rounded-lg dark:bg-gray-800" id="settings" role="tabpanel" aria-labelledby="settings-tab">
+          <p class="text-sm text-gray-500 dark:text-gray-400">This is some placeholder content the <strong class="font-medium text-gray-800 dark:text-white">Settings tab's associated content</strong>. Clicking another tab will toggle the visibility
+            of this one for the next. The tab JavaScript swaps classes to control the content visibility and styling.</p>
+        </div>
+        <div class="hidden p-4 bg-gray-50 rounded-lg dark:bg-gray-800" id="contacts" role="tabpanel" aria-labelledby="contacts-tab">
+          <p class="text-sm text-gray-500 dark:text-gray-400">This is some placeholder content the <strong class="font-medium text-gray-800 dark:text-white">Contacts tab's associated content</strong>. Clicking another tab will toggle the visibility
+            of this one for the next. The tab JavaScript swaps classes to control the content visibility and styling.</p>
         </div>
       </div>
       <!-- /End replace -->
@@ -174,7 +189,7 @@ export default {
     navigation = [{
       name: 'Preview',
       href: `/${u.attributes.username}/home`,
-      current: true
+      current: false
     },
     {
       name: 'Manage Profile',
@@ -184,7 +199,7 @@ export default {
     {
       name: 'Manage NFTs',
       href: `/${u.attributes.username}/tokens`,
-      current: false
+      current: true
     },
       {
         name: 'Upgrade',
