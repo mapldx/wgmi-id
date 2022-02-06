@@ -50,10 +50,6 @@
   <header class="bg-white shadow">
     <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
       <h1 class="text-3xl font-bold text-gray-900 mb-2">Welcome, {{ user.username }}
-        <button v-if="user.username.length <= 1" type="button"
-          class="align-middle ml-1 py-2 px-3 text-xs font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Set your
-          username</button>
-        <div class="float-right align-top"><span class="bg-blue-100 text-blue-800 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded dark:bg-blue-200 dark:text-blue-800">{{ encodedid }}</span></div>
       </h1>
     </div>
   </header>
@@ -74,13 +70,18 @@
             </ul>
             </p>
             <p class="mb-6 text-gray-900">
-              This NFT is a proof-of-ownership token on the Polygon Network (MATIC). It will contain your wgmi.ID username and address, a scannable QR code, and your status of verification. <a href="" class="text-blue-400"> Why Polygon? </a>
+              This NFT is a proof-of-ownership token on the Polygon Network (MATIC).<a href="" class="text-blue-400"> Why Polygon?</a>
             </p>
             <p class="mb-6 text-gray-900">
-              <span class="font-semibold">Do not sell, list, or transfer this NFT as it will make this dashboard inaccessible to you. We will be unable to recover your
-                username for your use as well.</span>
+              <span class="font-semibold">Do not sell, list, or transfer this NFT as it will make this dashboard inaccessible to you.</span>
             </p>
-            Verification for Solana-based wallet addresses is coming soon.
+            <p class="mb-6 text-gray-900">
+              By choosing to verify, you will henceforth not be able to change any of the information in this section.
+            </p>
+            <p class="mb-6 text-gray-900">Verification for Solana-based wallet addresses is coming soon.</p>
+            <button type="button" @click="verify"
+              class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Verify
+              Now</button>
           </div>
           <form class="w-full" ref="info" @submit.prevent="infoForm">
             <div class="relative z-0 mb-6 w-full group">
@@ -90,6 +91,8 @@
                   @
                 </span>
                 <input type="text" v-model="form['new_username']" class="block w-full text-gray-900 bg-white rounded-r-md border border-gray-300 sm:text-md focus:ring-blue-500 focus:border-blue-500" :placeholder="user.username" required />
+                <input v-if="verified == true" type="text" v-model="form['new_username']" class="block w-full text-gray-900 bg-white rounded-r-md border border-gray-300 sm:text-md focus:ring-blue-500 focus:border-blue-500"
+                  :placeholder="user.username" disabled />
               </div>
             </div>
             <div class="relative z-0 mb-6 w-full group">
@@ -112,10 +115,13 @@
               </div>
               <div class="relative z-0 mb-6 w-full group">
                 <label for="floating_last_name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Main Address</label>
-                <input type="text" name="floating_last_name" id="floating_last_name" class="block w-full text-gray-900 bg-gray-200 rounded-md border border-gray-300 sm:text-md focus:ring-blue-500 focus:border-blue-500"
-                  :value="u.attributes.solAddress" disabled />
+                <input v-if="u.attributes.ethAddress != null" type="text" name="floating_last_name" id="floating_last_name"
+                  class="block w-full text-gray-900 bg-gray-200 rounded-md border border-gray-300 sm:text-md focus:ring-blue-500 focus:border-blue-500" :value="u.attributes.ethAddress" disabled />
+                <input v-else type="text" name="floating_last_name" id="floating_last_name" class="block w-full text-gray-900 bg-gray-200 rounded-md border border-gray-300 sm:text-md focus:ring-blue-500 focus:border-blue-500"
+                  :value="u.attributes.ethAddress" disabled />
               </div>
             </div>
+            <!--
             <div class="grid xl:grid-cols-2 xl:gap-6">
               <div class="relative z-0 mb-6 w-full group">
                 <label for="floating_first_name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Secondary Wallet's Network</label>
@@ -133,6 +139,7 @@
                 <input type="text" name="floating_company" id="floating_company" class="block w-full text-gray-900 bg-white rounded-md border border-gray-300 sm:text-md focus:ring-blue-500 focus:border-blue-500" :value="user.altAddress" required />
               </div>
             </div>
+            -->
             <div class="relative z-0 mb-6 w-full group">
               <label for="floating_password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">IPFS Metadata URL</label>
               <input type="password" name="floating_password" id="floating_password" class="block w-full text-gray-900 bg-gray-200 rounded-md border border-gray-300 sm:text-md focus:ring-blue-500 focus:border-blue-500" placeholder="Unverified"
@@ -151,11 +158,15 @@
               Your bio section
             </h5>
             <p class="mb-6 text-gray-900">
-              Take 160 characters of fun to convey essential information you want the rest of the world to know about who you are across Web 2, communities, DAOs, metaverse worlds, and so much more.
+              Add a fun title and take 160 characters of fun to convey essential information you want the rest of the world to know about who you are across Web 2, communities, DAOs, metaverse worlds, and so much more.
             </p>
           </div>
           <form class="w-full" ref="info" @submit.prevent="infoForm">
-            <label for="message" class="block bg-yellow-100 text-yellow-800 text-xs font-semibold mr-2 px-2.5 py-0.5 mb-2 rounded dark:bg-yellow-200 dark:text-yellow-900">≤ 160 characters</label>
+            <label for="message" class="block bg-yellow-100 text-yellow-800 text-xs font-semibold mr-2 px-2.5 py-0.5 mb-2 rounded dark:bg-yellow-200 dark:text-yellow-900">Title ≤ 20 characters</label>
+            <input type="text" id="message" rows="1" v-model="form['new_title']"
+              class="block p-2.5 mb-6 w-full text-sm text-gray-900 bg-white rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              :placeholder="user.profileTitle" />
+            <label for="message" class="block bg-yellow-100 text-yellow-800 text-xs font-semibold mr-2 px-2.5 py-0.5 mb-2 rounded dark:bg-yellow-200 dark:text-yellow-900">Bio ≤ 160 characters</label>
             <textarea id="message" rows="4" v-model="form['new_bio']"
               class="block p-2.5 mb-6 w-full text-sm text-gray-900 bg-white rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
               :placeholder="user.profileBio"></textarea>
@@ -179,12 +190,8 @@
             <div class="grid xl:grid-cols-2 xl:gap-6">
               <div class="relative z-0 mb-6 w-full group">
                 <label for="floating_first_name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">First Link</label>
-                <select v-model="form['new_link1Platform']" name="floating_first_name" id="floating_first_name" class="block w-full text-gray-900 bg-white rounded-md border border-gray-300 sm:text-md focus:ring-blue-500 focus:border-blue-500">
-                  <option value="twitter">Twitter</option>
-                  <option value="discord">Discord</option>
-                  <option v-if="user.profileLink1Platform == 'Twitter'" value="twitter" selected>Twitter</option>
-                  <option v-if="user.profileLink1Platform == 'Discord'" value="discord" selected>Discord</option>
-                </select>
+                <input v-model="form['new_link1Platform']" type="text" name="floating_company" id="floating_company" class="block w-full text-gray-900 bg-white rounded-md border border-gray-300 sm:text-md focus:ring-blue-500 focus:border-blue-500"
+                  :placeholder="user.profileLink1Platform" required />
               </div>
               <div class="relative z-0 mb-6 w-full group">
                 <label for="floating_company" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Link Address</label>
@@ -195,13 +202,8 @@
             <div class="grid xl:grid-cols-2 xl:gap-6">
               <div class="relative z-0 mb-6 w-full group">
                 <label for="floating_first_name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Second Link</label>
-                <select v-model="form['new_link2Platform']" name="floating_first_name" id="floating_first_name" class="block w-full text-gray-900 bg-white rounded-md border border-gray-300 sm:text-md focus:ring-blue-500 focus:border-blue-500"
-                  placeholder="Phantom">
-                  <option value="twitter">Twitter</option>
-                  <option value="discord">Discord</option>
-                  <option v-if="user.profileLink2Platform == 'Twitter'" value="twitter" selected hidden>Twitter</option>
-                  <option v-if="user.profileLink2Platform == 'Discord'" value="discord" selected hidden>Discord</option>
-                </select>
+                <input v-model="form['new_link2Platform']" type="text" name="floating_company" id="floating_company" class="block w-full text-gray-900 bg-white rounded-md border border-gray-300 sm:text-md focus:ring-blue-500 focus:border-blue-500"
+                  :placeholder="user.profileLink2Platform" required />
               </div>
               <div class="relative z-0 mb-6 w-full group">
                 <label for="floating_company" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Link Address</label>
@@ -209,6 +211,7 @@
                   :placeholder="user.profileLink2Target" required />
               </div>
             </div>
+            <!--
             <div class="grid xl:grid-cols-2 xl:gap-6">
               <div class="relative z-0 mb-6 w-full group">
                 <label for="floating_first_name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Third Link</label>
@@ -229,6 +232,7 @@
                 <input type="text" name="floating_company" id="floating_company" class="block w-full text-gray-900 bg-gray-200 rounded-md border border-gray-300 sm:text-md focus:ring-blue-500 focus:border-blue-500" placeholder=" " disabled />
               </div>
             </div>
+          -->
             <button type="submit" @click="links"
               class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Save
               Section</button>
@@ -332,24 +336,6 @@ export default {
       }
     })
 
-    const change_altNetwork = async () => {
-      try {
-        u.set("altNetwork", "")
-        await u.save()
-      } catch (error) {
-        console.log(error)
-      }
-    }
-
-    const change_altAddress = async () => {
-      try {
-        u.set("altAddress", "")
-        await u.save()
-      } catch (error) {
-        console.log(error)
-      }
-    }
-
     const logout = async () => {
       await $moralis.User.logOut()
       setUser({})
@@ -359,21 +345,67 @@ export default {
     }
 
     return {
-      change_altNetwork,
-      change_altAddress,
-      logout,
       u,
       user,
+      logout,
       navigation,
       isAuthenticated: computed(() => Object.keys(store.state.user).length > 0)
     }
   },
   methods: {
+    verify: async () => {
+      try {
+        const Moralis = require('moralis')
+        const u = Moralis.User.current()
+        const axios = require('axios')
+        const API_KEY = '89b40ed9-dae1-4d72-9af3-61bf14f33a01'
+        var obj = {
+          data: []
+        }
+        obj.data.push({
+          id: u.id,
+          createdAt: u.attributes.createdAt,
+          username: u.attributes.username,
+          address: 'wgmi.id/' + u.attributes.username,
+          ethAddress: u.attributes.ethAddress
+        })
+        const file = new Moralis.File("verify.json", {
+          base64: btoa(JSON.stringify(obj))
+        })
+        await file.saveIPFS()
+        const options = {
+          method: 'POST',
+          url: 'https://api.nftport.xyz/v0/mints/easy/urls',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: API_KEY
+          },
+          data: {
+            chain: 'polygon',
+            name: 'wgmi.id/' + u.attributes.username,
+            description: 'wgmi.ID verification token for ' + u.attributes.username + '. Verified on ' + Date() + '.',
+            file_url: file.ipfs(),
+            mint_to_address: u.attributes.ethAddress
+          }
+        }
+        setTimeout(function() {
+          axios.request(options).then(function(response) {
+            console.log(response)
+            console.log(response.data)
+            u.set("verified", "true")
+            u.save()
+          }).catch(function(error) {
+            console.error(error)
+          })
+        }, 0)
+      } catch (error) {
+        console.log(error)
+      }
+    },
     info() {
       try {
         const Moralis = require('moralis')
         const u = Moralis.User.current()
-        console.log(this.form.new_username)
         u.set("username", this.form.new_username)
         console.log(u)
         u.save().then(() => {
@@ -387,7 +419,7 @@ export default {
       try {
         const Moralis = require('moralis')
         const u = Moralis.User.current()
-        console.info(this.form.new_bio)
+        u.set("profileTitle", this.form.new_title)
         u.set("profileBio", this.form.new_bio)
         u.save()
       } catch (error) {
@@ -395,7 +427,18 @@ export default {
       }
     },
     links() {
-
+      try {
+        const Moralis = require('moralis')
+        const u = Moralis.User.current()
+        console.info(this.form.new_link1Target)
+        u.set("profileLink1Platform", this.form.new_link1Platform)
+        u.set("profileLink1Target", this.form.new_link1Target)
+        u.set("profileLink2Platform", this.form.new_link2Platform)
+        u.set("profileLink2Target", this.form.new_link2Target)
+        u.save()
+      } catch (error) {
+        console.log(error)
+      }
     }
   }
 }

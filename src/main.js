@@ -6,8 +6,8 @@ import './assets/tailwind.css'
 import 'flowbite'
 import Moralis from 'moralis'
 
-const serverUrl = "https://reru8mdohcak.usemoralis.com:2053/server";
-const appId = "AYm5bV4q8SOIBkx5GrOmbXdTePXNQTjBw2jUqVTK";
+const serverUrl = "https://jyltvrxzqb41.usemoralis.com:2053/server";
+const appId = "mZqzSnGjzeYGE1GrWRET8rXbdKn2ucRo4zJfsmKg";
 
 Moralis.start({ serverUrl, appId });
 
