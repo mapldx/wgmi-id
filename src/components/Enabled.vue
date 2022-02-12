@@ -21,8 +21,21 @@
       </div>
       <div class="max-w-lg mx-auto text-sm mt-4 text-center font-semibold text-white sm:text-base md:max-w-xl md:text-lg xl:text-xl">Your <span class="bg-gradient-to-r from-logo-10 to-logo-20 p-1 rounded-md"> wgmi.id</span> address is your universal
         Web 2 and 3 address to show 'em all.</div>
-      <div class="mt-8 text-sm text-white">Supporting Ethereum, Polygon (MATIC), and Solana NFTs on day one. Cardano and Near support soon after.</div>
-      <div class="mt-2 text-sm text-white">Know when you can claim your username <a href="https://twitter.com/wgmiallday" data-modal-toggle="signin" class="font-semibold">here →</a></div>
+      <div class="relative flex items-center max-w-xl mx-auto mt-8 overflow-hidden text-center">
+        <span class="relative top-0 right-0 block">
+          <span class="inline-flex items-center rounded-l-md w-28 h-12 px-6 text-base font-bold leading-6 text-white bg-indigo-400 border border-transparent">
+            wgmi.id/
+          </span>
+        </span>
+        <input type="text" name="email" placeholder="satoshi" class="w-full h-12 px-6 py-2 font-medium text-indigo-800 focus:outline-none">
+        <span class="relative top-0 right-0 block">
+          <button type="button"
+            class="rounded-r-lg inline-flex items-center w-48 h-12 px-8 text-base font-bold leading-6 text-white transition duration-150 ease-in-out bg-indigo-400 border border-transparent hover:bg-indigo-700 focus:outline-none active:bg-indigo-700">
+            Claim username
+          </button>
+        </span>
+      </div>
+      <div class="mt-8 text-sm text-white">Already have a wgmi.id address? <button type="button" data-modal-toggle="signin" class="font-semibold">Sign in here →</button></div>
 
       <!-- Main modal -->
       <div id="signin" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed right-0 left-0 top-4 z-50 justify-center items-center h-modal md:h-full md:inset-0">
@@ -126,8 +139,7 @@
                   </a>
                 </li>
                 <li>
-                  <button type="button" data-modal-toggle="signin-email"
-                    class="flex items-center p-3 w-full text-base font-bold text-gray-900 border-solid border-2 border-gray-50 rounded-lg hover:bg-gray-100 group hover:shadow dark:bg-gray-600 dark:hover:bg-gray-500 dark:text-white">
+                  <button type="button" data-modal-toggle="signin-email" class="flex items-center p-3 w-full text-base font-bold text-gray-900 border-solid border-2 border-gray-50 rounded-lg hover:bg-gray-100 group hover:shadow dark:bg-gray-600 dark:hover:bg-gray-500 dark:text-white">
                     <span class="flex-1 ml-3 whitespace-nowrap text-center">Log in with email</span>
                   </button>
                 </li>
@@ -156,7 +168,8 @@
           <!-- Modal content -->
           <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
             <div class="flex justify-end p-2">
-              <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-800 dark:hover:text-white" data-modal-toggle="signin-email">
+              <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-800 dark:hover:text-white"
+                data-modal-toggle="signin-email">
                 <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                   <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
                     clip-rule="evenodd"></path>
@@ -179,8 +192,7 @@
               <div class="flex justify-between">
                 <a href="#" class="text-sm text-blue-700 hover:underline dark:text-blue-500">Forgot your password?</a>
               </div>
-              <button type="submit" class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Log
-                in</button>
+              <button type="submit" class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Log in</button>
               <div class="text-sm font-medium text-gray-500 dark:text-gray-300">
                 Need help? <a href="#" class="text-blue-700 hover:underline dark:text-blue-500">Contact us</a>
               </div>
