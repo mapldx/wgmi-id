@@ -1,5 +1,5 @@
 <template>
-<div class="h-screen overflow-hidden bg-brown-50">
+<div class="h-screen overflow-hidden">
   <Header />
   <Footer />
 </div>

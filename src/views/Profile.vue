@@ -55,7 +55,6 @@
   </header>
   <main>
     <div class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8 mb-24">
-      <!-- Replace with your content -->
       <div class="py-12 mb-4 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24">
         <div class="flex flex-col lg:flex-row">
           <div class="max-w-xl pr-16 mx-auto mb-10">
@@ -90,9 +89,8 @@
                 <span class="inline-flex items-center px-3 text-sm text-gray-900 bg-white rounded-l-md border border-r-0 border-gray-300 dark:bg-gray-600 dark:text-gray-400 dark:border-gray-600">
                   @
                 </span>
-                <input type="text" v-model="form['new_username']" class="block w-full text-gray-900 bg-white rounded-r-md border border-gray-300 sm:text-md focus:ring-blue-500 focus:border-blue-500" :placeholder="user.username" required />
-                <input v-if="verified == true" type="text" v-model="form['new_username']" class="block w-full text-gray-900 bg-white rounded-r-md border border-gray-300 sm:text-md focus:ring-blue-500 focus:border-blue-500"
-                  :placeholder="user.username" disabled />
+                <input v-if="u.attributes.verified == 'true'" type="text" class="block w-full text-gray-900 bg-white rounded-r-md border border-gray-300 sm:text-md focus:ring-blue-500 focus:border-blue-500" :value="user.username" disabled />
+                <input v-else type="text" v-model="form['new_username']" class="block w-full text-gray-900 bg-white rounded-r-md border border-gray-300 sm:text-md focus:ring-blue-500 focus:border-blue-500" :placeholder="user.username" required />
               </div>
             </div>
             <div class="relative z-0 mb-6 w-full group">
@@ -142,8 +140,8 @@
             -->
             <div class="relative z-0 mb-6 w-full group">
               <label for="floating_password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">IPFS Metadata URL</label>
-              <input type="password" name="floating_password" id="floating_password" class="block w-full text-gray-900 bg-gray-200 rounded-md border border-gray-300 sm:text-md focus:ring-blue-500 focus:border-blue-500" placeholder="Unverified"
-                disabled />
+              <input :value="ipfsUrl" type="password" name="floating_password" id="floating_password" class="block w-full text-gray-900 bg-gray-200 rounded-md border border-gray-300 sm:text-md focus:ring-blue-500 focus:border-blue-500"
+                placeholder="Unverified" disabled />
             </div>
             <button type="button" @click="info"
               class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Save
@@ -313,6 +311,7 @@ export default {
     ]
 
     user = {
+      verified: u.attributes.verified,
       username: u.attributes.username,
       ethAddress: u.attributes.ethAddress,
       solAddress: u.attributes.solAddress,
@@ -330,7 +329,6 @@ export default {
       try {
         let modalBackground = document.querySelector("div[class*='bg-gray-900 bg-opacity-50']")
         if (modalBackground) modalBackground.remove()
-        console.log(u)
       } catch (error) {
         console.log(error)
       }
@@ -390,8 +388,8 @@ export default {
         }
         setTimeout(function() {
           axios.request(options).then(function(response) {
-            console.log(response)
             console.log(response.data)
+            u.set("ipfsUrl", file.hash())
             u.set("verified", "true")
             u.save()
           }).catch(function(error) {

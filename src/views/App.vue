@@ -1,13 +1,4 @@
-<!-- This example requires Tailwind CSS v2.0+ -->
 <template>
-<!--
-    This example requires updating your template:
-
-    ```
-    <html class="h-full bg-gray-100">
-    <body class="h-full">
-    ```
-  -->
 <div class="min-h-full">
   <Disclosure as="nav" class="bg-logo-30">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -122,7 +113,7 @@
       </div>
       <div class="">
         <div class="relative px-4 py-4 mb-20 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8">
-          <iframe src="/" class="w-full h-screen"></iframe>
+          <iframe :src="'/' + user.username" class="w-full h-screen"></iframe>
         </div>
       </div>
       <!-- /End replace -->
@@ -194,9 +185,7 @@ export default {
     ]
 
     user = {
-      username: '@' + u.attributes.username,
-      email: 'tom@example.com',
-      imageUrl: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
+      username: u.attributes.username,
     }
 
     onBeforeMount(() => {
@@ -217,21 +206,9 @@ export default {
       })
     }
 
-    const chgUname = async () => {
-      try {
-        const curr = $moralis.User.current()
-        console.log(curr)
-        curr.set("username", "test")
-        await curr.save()
-      } catch (error) {
-        console.log(error)
-      }
-    }
-
     return {
-      chgUname,
-      logout,
       user,
+      logout,
       navigation,
       isAuthenticated: computed(() => Object.keys(store.state.user).length > 0)
     }

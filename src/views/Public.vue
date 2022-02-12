@@ -6,7 +6,7 @@
         <div class="grid lg:grid-cols-2 items-center align-center text-center">
           <div class="lg:pr-10">
             <div class="inline-flex mb-4">
-              <span class="bg-green-100 text-green-800 mr-4 text-xs font-medium inline-flex items-center px-2.5 py-0.5 rounded-lg dark:bg-blue-200 dark:text-blue-800">
+              <span v-if="verified == 'true'" class="bg-green-100 text-green-800 mr-4 text-xs font-medium inline-flex items-center px-2.5 py-0.5 rounded-lg dark:bg-blue-200 dark:text-blue-800">
                 <img src="https://img.icons8.com/ios/50/2e7d32/checked-checkbox--v1.png" class="h-4 mr-2" />
                 verified on-chain
               </span>
@@ -178,7 +178,7 @@ export default {
       this.username = balance.username
       this.title = balance.profileTitle
       this.bio = balance.profileBio
-      this.verified = balance.profileVerified
+      this.verified = balance.verified
       this.irl = balance.profileIrl
       this.ipfs = balance.ipfsUrl
       this.eth = balance.ethAddress

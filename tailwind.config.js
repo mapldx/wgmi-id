@@ -301,7 +301,9 @@ module.exports = {
 				logo: {
 					10: '#8F5BFE',
 					20: '#D3803E',
-					30: '#EEEBD0'
+					30: '#EEEBD0',
+					40: '#006D77',
+					50: '#71816D'
 				},
 			},
 			spacing: {
